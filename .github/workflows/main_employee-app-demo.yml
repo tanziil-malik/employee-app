@@ -2,6 +2,12 @@
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
 name: Build and deploy Node.js app to Azure Web App - employee-app-demo
+- name: npm install, build, and test
+  working-directory: ./
+  run: |
+    npm install
+    npm run build --if-present
+    npm run test --if-present
 
 on:
   push:
@@ -62,4 +68,5 @@ jobs:
           app-name: 'employee-app-demo'
           slot-name: 'Production'
           package: .
+
           
