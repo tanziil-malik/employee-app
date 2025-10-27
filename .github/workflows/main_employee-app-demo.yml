@@ -19,11 +19,11 @@ jobs:
           node-version: '18'
 
       - name: Install dependencies
-        working-directory: employee-app  # 👈 your app folder name
+        working-directory: . # 👈 your app folder name
         run: npm install
 
       - name: Build app
-        working-directory: employee-app  # 👈 same folder
+        working-directory: .  # 👈 same folder
         run: npm run build --if-present
 
       - name: Deploy to Azure Web App
@@ -32,3 +32,4 @@ jobs:
           app-name: employee-app-demo
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISH_PROFILE }}
           package: employee-app  # 👈 package from the same folder
+
