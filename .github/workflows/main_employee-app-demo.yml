@@ -1,4 +1,4 @@
-name: Build and Deploy Node.js App to Azure
+name: Build and Deploy Node.js app to Azure Web App
 
 on:
   push:
@@ -11,25 +11,25 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '18.x'
 
       - name: Install dependencies
-        working-directory: . # 👈 your app folder name
         run: npm install
+        working-directory: .
 
-      - name: Build app
-        working-directory: .  # 👈 same folder
+      - name: Build project
         run: npm run build --if-present
+        working-directory: .
 
       - name: Deploy to Azure Web App
-        uses: azure/webapps-deploy@v2
+        uses: azure/webapps-deploy@v3
         with:
-          app-name: employee-app-demo
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISH_PROFILE }}
-          package: employee-app  # 👈 package from the same folder
-
+          app-name: 'employee-app-demo'
+          slot-name: 'production'
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: .
